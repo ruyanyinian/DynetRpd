@@ -19,7 +19,8 @@ DynetParams extract_dynet_params(int& argc, char **&argv, bool shared_parameters
      */
     DynetParams params;
     params.shared_parameters = shared_parameters;
-
+    
+    //TODO(QINYU): 待填充
     return params;
 }
 

@@ -15,5 +15,6 @@ struct DynetParams {
 };
 
 DynetParams extract_dynet_params(int& argc, char **&argv, bool shared_parameters=false);
+ 
 }
 #endif
