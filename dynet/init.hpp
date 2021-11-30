@@ -15,5 +15,7 @@ struct DynetParams {
 };
 
 DynetParams extract_dynet_params(int& argc, char **&argv, bool shared_parameters=false);
-}
+void initialize(DynetParams& params); 
+void initialize(int& argc, char **&argv, bool shared_parameters=false);
+} /*dynet namespace */ 
 #endif
