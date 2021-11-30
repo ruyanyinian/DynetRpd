@@ -1,7 +1,5 @@
 #include "calc.hpp"
 
-
-
 namespace computation {
 #if EXEC_ADD
 int add(int a, int b) {
