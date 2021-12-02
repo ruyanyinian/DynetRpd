@@ -29,6 +29,10 @@ void initialize(DynetParams& params) {
      /**
       * @brief 对params传入进来的参数进行初始化, 比如对一些device, randomseed等等进行初始化, 
       */
+     if (default_device != nullptr) {
+         cerr << "WARNING: Attempting to initialize dynet twice" << endl;
+     }
+     
 }
 
 void initialize(int& argc, char **&argv, bool shared_parameters) { 
