@@ -1,11 +1,13 @@
-#include "dynet/init.hpp"
+// #include "dynet/init.hpp"
 #include <iostream>
 using namespace std;
-using namespace dynet;
+// using namespace dynet;
 
 
 int main(int argc, char** argv) {
     
-    dynet::initialize(argc, argv);
-    return 0;
+    // dynet::initialize(argc, argv);
+    // return 0;
+    int a = {1};
+    cout << a <<endl;
 }

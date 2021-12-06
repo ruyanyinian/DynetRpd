@@ -1,4 +1,4 @@
-#include "dynet/init.hpp"
+#include "init.hpp"
 #include <iostream>
 
 using namespace std;
