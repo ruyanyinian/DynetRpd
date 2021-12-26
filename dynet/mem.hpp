@@ -25,7 +25,7 @@ struct MemAllocator {
 };
 
 struct CPUAllocator : public MemAllocator {
-    CPUAllocator() : MemAllocator(32) {}
+    CPUAllocator() : MemAllocator(32) {} // 初始化父类
     void* malloc(std::size_t n) override;
     void free(void* mem) override;
     void zero(void* p, std::size_t n) override; 

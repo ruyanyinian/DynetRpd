@@ -16,7 +16,6 @@ protected:
     Device(const Device&) = delete;
     Device& operator=(const Device&) = delete;
     virtual ~Device();
-
 public:
     void reset_rng(unsigned int seed);
     int device_id;
