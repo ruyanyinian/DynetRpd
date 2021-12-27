@@ -19,9 +19,15 @@ struct Dim
     Dim(std::initializer_list<unsigned int> x) : nd(0), bd(1) {
         for (auto v : x) d[nd++] = v;
     }
-    Dim(const std::vector<long> & x, unsigned int b) {
+    Dim(std::initializer_list<unsigned int> x, unsigned int b) : nd(0), bd(b) {
+        for (auto v : x) d[nd++] = v;
+    }
+    
+    Dim(const std::vector<long> & x) : nd(0), bd(1) {
         for (auto v : x) d[nd++] = static_cast<unsigned int>(v);
-
+    }
+    Dim(const std::vector<long> & x, unsigned int b) : nd(0), bd(b) {
+        for (auto v : x) d[nd++] = static_cast<unsigned int>(v);
     }
     /**
      * batch_size就是所有的维度相乘
@@ -44,11 +50,17 @@ struct Dim
         return p;
     }
     // 在这里我们要返回一个Dim的对象
-    inline Dim signle_batch() const {
+    inline Dim single_batch() const {
         Dim r = *this;
         r.bd = 1;
         return r; 
     }
+    inline unsigned int operator[](unsigned int i) const { return i < nd? d[i] : 1; }
+    inline unsigned int size(unsigned int i) const { return (*this)[i]; }
+    inline unsigned int ndims() const { return nd; }
+    inline unsigned int rows() const { return d[0]; }
+    inline unsigned int cols() const { return nd > 1 ? d[1] : 1; }
+    inline unsigned int batch_elems() const { return bd; }
     
     unsigned int d[DYNET_MAX_TENSOR_DIM];
     unsigned int nd;
