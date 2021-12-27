@@ -60,10 +60,41 @@ struct Tensor {
             Tensor ret(new_d, v + bsize * b, device, mem_pool)
             return ret;
         }
-    } 
+    }
+
+    /**
+     * \brief 获取所有batch tensor
+     * \return 返回的是一个vector of tensor 
+    */
+    std::vector<Tensor> batch_elems() const {
+        if (d.batch_elems() == 1) {
+            return std::vector<Tensor>(1, *this);
+        } else {
+            //创建一个vector, batch_elems返回的是nd, 假设Dim d({224,224,3}, 32), 那么这里的bs就是32个tensor元素, 但是每一个元素是什么现在还是未知的
+            std::vector<Tensor> bs(d.batch_elems());
+            unsigned int bsize = d.batch_size(); // batch_size就是所有的维度相乘,假设是{224,224,3}, 那么就是224*224*3
+            Dim new_d = d; new_d.bd = 1; // 因为这个是被const修饰过的函数, 所以原本的d(也就是成员函数)就不能再更改了, 所以创建一个新的
+            for (unsigned int b = 0; b < d.batch_elems(); ++b) {
+                bs[b] = Tensor(new_d, v + bsize * b, device, mem_pool);
+            }
+            return bs;
+        }
+    }
+
     Dim d;
     float* v;
     Device* device;
     DeviceMempool mem_pool;
 }
+
+//重载了<<
+std::ostream& operator<<(std::ostream& os, const Tensor& t);
+//得到一个元素的tensor, 比如这个tensor只有一个元素了, 我们就把这个取出来
+real as_scaler(const Tensor& t);
+//这个是把一个tensor给拉直, 不管是什么维度的
+std::vector<real> as_vector(const Tensor& t);
+//目前不知道
+std::vector<real> as_scale_vector(const Tensor& v, float a);
+
+
 }
