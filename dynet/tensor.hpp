@@ -54,7 +54,9 @@ struct Tensor {
                 throw std::runtime_error(ss.str());
             }
             const unsigned int bsize = d.batch_size();
-            Dim new_d(d) ; new_d.bd = 1; // 这个是调用默认的拷贝构造函数吗, 确实是调用的是默认的拷贝构造函数, 这个拷贝构造函数没有主动定义
+            // 这个是调用默认的拷贝构造函数吗, 确实是调用的是默认的拷贝构造函数, 这个拷贝构造函数没有主动定义
+            // 因为这里的batch_elem是const修饰,也就是无法改变d对象的内容, 所以只能是新建一个new_d来返回
+            Dim new_d(d) ; new_d.bd = 1; 
             Tensor ret(new_d, v + bsize * b, device, mem_pool)
             return ret;
         }
