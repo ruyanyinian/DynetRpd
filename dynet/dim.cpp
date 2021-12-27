@@ -1,10 +1,17 @@
 #include "dynet/dim.hpp"
 #include <iostream>
-using namespace dynet;
-int main() {
+using namespace std;
 
-    dynet::Dim d({224, 224, 3});
-    dynet::Dim t = d.signle_batch();
-    std::cout << t.batch_size() << std::endl;
-    return 0;
+
+namespace dynet {
+ostream& operator<<(ostream& os, const Dim& d) {
+  os << '{';
+  for (unsigned i = 0; i < d.nd; ++i) {
+    if (i) os << ',';
+    os << d.d[i];
+  }
+  if(d.bd != 1) os << 'X' << d.bd;
+  return os << '}';
 }
+}
+

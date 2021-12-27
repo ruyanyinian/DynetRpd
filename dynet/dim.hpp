@@ -61,11 +61,65 @@ struct Dim
     inline unsigned int rows() const { return d[0]; }
     inline unsigned int cols() const { return nd > 1 ? d[1] : 1; }
     inline unsigned int batch_elems() const { return bd; }
-    
+    /*下面是计算有多少是0维度的*/
+    inline unsigned int num_nonone_dims() const {
+        int ret = 0;
+        for (size_t i = 0; i < nd; i++) {
+            if(d[i] != 1) {
+                ++ret;
+            }
+        }
+        return ret;
+    }
+
+    /**
+     * 删除指定的维度i
+    */
+    inline unsigned int delete_dim(unsigned int i) {
+        if(i == nd - 1) {
+            if(nd == 1) {
+                d[0] = 1;
+            }
+            else {
+                --nd;
+            }
+        }
+        else {
+            for(; i + 1 < nd; ++i) {
+                d[i] = d[i+1];
+            }
+            --nd;
+        }
+    }
+    inline void delete_dims(const std::vector<unsigned int>& dims, bool reduce_batch){
+        std::vector<bool> deleted_dims(nd, false);
+
+        for(unsigned int i = 0; i < dims.size(); i++) {
+            deleted_dims[dims[i]] = true;
+        }
+
+        if(dims.size() == nd) {
+            nd = 1;
+            d[0] = 1;
+        } else {
+        int flag = 0;
+        for(unsigned int i = 0; i < nd; i++) {
+            if(!deleted_dims[i])
+            d[flag++] = d[i];
+        }
+        nd = flag;
+        }
+
+        if(reduce_batch)
+        bd = 1;
+    }
     unsigned int d[DYNET_MAX_TENSOR_DIM];
     unsigned int nd;
     unsigned int bd;
 };
+
+std::ostream& operator<<(std::ostream& os, const Dim& d);
+
 
 }
 #endif 
