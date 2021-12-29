@@ -1,6 +1,14 @@
+#include "dynet/tensor.h"
+#include "dynet/tensor-eigen.h"
+#include "dynet/index-tensor.h"
+#include "dynet/globals.h"
+#include "dynet/except.h"
+#include "dynet/devices.h"
 
-#include "dynet/tensor.hpp"
-#include "dynet/device-structs.hpp"
+#include <random>
+#include <vector>
+#include <cstring>
+#include <algorithm>
 
 namespace dynet {
 bool Tensor::is_valid const {
@@ -20,6 +28,30 @@ bool Tensor::is_valid const {
 
 
 std::ostream& operator<<(std::ostream& os, const Tensor& t) {
-    if (t.device->type == DeviceType::CPU)
+    if (t.device->type == DeviceType::CPU) {
+        os << mat(t);
+    }
+    return os;
 }
+
+real as_scalar(const Tensor& t) {
+    if (t.d.size() != 1)
+        throw std::runtime_error("Input tensor has more than one element, cannot convert to scalar.");
+    real res = 0.;
+    if (t.device->type == DeviceType::CPU) {
+        return t.v[0];
+    }
+    return res        
 }
+
+vector<real> as_vector(const Tensor& v) {
+    vector<real> res(v.d.size());
+    if (v.device->type == DeviceType::CPU) {
+        memcpy(&res[0], v.v, sizeof(real) * res.size());
+    } else { throw std::runtime_error("Bad device type"); }
+    return res;
+}
+
+
+}
+

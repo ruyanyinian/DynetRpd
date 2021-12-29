@@ -90,7 +90,7 @@ struct Tensor {
 //重载了<<
 std::ostream& operator<<(std::ostream& os, const Tensor& t);
 //得到一个元素的tensor, 比如这个tensor只有一个元素了, 我们就把这个取出来
-real as_scaler(const Tensor& t);
+real as_scalar(const Tensor& t);
 //这个是把一个tensor给拉直, 不管是什么维度的
 std::vector<real> as_vector(const Tensor& t);
 //目前不知道
