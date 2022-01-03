@@ -18,6 +18,7 @@ using namespace std;
 namespace dynet {
 
 MemAllocator::~MemAllocator() {}
+
 void* CPUAllocator::malloc(size_t n) {
     void* ptr = _mm_malloc(n, align); // align = 32
     if (!ptr) {
@@ -37,4 +38,23 @@ void CPUAllocator::free(void* mem) {
     _mm_free(mem);
 }
 
+
+void* SharedAllocator::malloc(size_t n) {
+    void* ptr = mmap(NULL, n, PROT_READ|PROT_WRITE, MAP_ANON|MAP_SHARED, -1, 0);
+    if (ptr == MAP_FAILED) {
+        show_pool_mem_info();
+        cerr << "Shared memory allocation failed n=" << n << endl;
+        throw dynet::out_of_memory("Shared memory allocation failed");
+    }
+    return ptr;
+#endif
+}
+
+void SharedAllocator::free(void* mem) {
+//  munmap(mem, n);
+}
+
+void SharedAllocator::zero(void* p, size_t n) {
+    memset(p, 0, n);
+}
 }
