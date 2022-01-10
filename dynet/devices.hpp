@@ -33,7 +33,7 @@ public:
     float* kSCALAR_ONE;
     float* kSCALAR_ZERO;
     std::string name;
-    virtual DeviceMempoolSizes mark(ComputationGraph *cg);
+    // virtual DeviceMempoolSizes mark(ComputationGraph *cg);
     virtual void revert(const DeviceMempoolSizes & cp);
     void allocate_tensor(DeviceMempool mem_pool, Tensor & tensor);
     std::vector<AlignedMemoryPool*> pools;
@@ -56,9 +56,9 @@ public:
     void clear();
     void add(Device* d);
     Device* get(size_t i) { return devices[i]; }
-    size_t num_devices() const { return devices.size() };
+    size_t num_devices() const { return devices.size(); }
     const std::vector<Device*>& get_devices() const { return devices; }
-    Device* get_global_device(cosnt std::string& name);
+    Device* get_global_device(const std::string& name);
     
     // no copying allowed
     DeviceManager(const DeviceManager &) = delete;

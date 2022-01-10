@@ -69,7 +69,7 @@ void Device::revert(const DeviceMempoolSizes& cp) {
 }
 void Device::allocate_tensor(DeviceMempool mp, Tensor& tens) {
 
-    tens.v = (float*)pools[(int)mp]->allocate(tens.d.size(0) * sizeof(float));
+    tens.v = (float*)pools[(int)mp]->allocate(tens.d.size() * sizeof(float));
     tens.mem_pool = mp
 }
 

@@ -7,9 +7,10 @@
 #include <stdexcept>
 
 #include "dynet/dim.hpp"
-#include "dynet/except.hpp"
+// #include "dynet/except.hpp"
 #include "dynet/aligned-mem-pool.hpp"
 #include "dynet/device-structs.hpp"
+#include "dynet/devices.hpp"
 
 namespace dynet {
 
@@ -46,7 +47,7 @@ struct Tensor {
     */
     Tensor batch_elem(unsigned int b) const {
         if (d.batch_elems() == 1) {
-            return *this
+            return *this;
         } else {
             if (b >= d.batch_elems()) {
                 std::stringstream ss;
@@ -57,7 +58,7 @@ struct Tensor {
             // 这个是调用默认的拷贝构造函数吗, 确实是调用的是默认的拷贝构造函数, 这个拷贝构造函数没有主动定义
             // 因为这里的batch_elem是const修饰,也就是无法改变d对象的内容, 所以只能是新建一个new_d来返回
             Dim new_d(d) ; new_d.bd = 1; 
-            Tensor ret(new_d, v + bsize * b, device, mem_pool)
+            Tensor ret(new_d, v + bsize * b, device, mem_pool);
             return ret;
         }
     }
@@ -85,7 +86,7 @@ struct Tensor {
     float* v;
     Device* device;
     DeviceMempool mem_pool;
-}
+};
 
 //重载了<<
 std::ostream& operator<<(std::ostream& os, const Tensor& t);
@@ -98,3 +99,4 @@ std::vector<real> as_scale_vector(const Tensor& v, float a);
 
 
 }
+#endif 

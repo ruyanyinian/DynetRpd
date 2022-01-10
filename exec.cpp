@@ -1,14 +1,9 @@
-
-#include <unsupported/Eigen/CXX11/Tensor>
-#include <iostream>
+#include "dynet/tensor.hpp"
 using namespace std;
-using namespace Eigen;
-
-
-
 int main() {
-    Eigen::Tensor<int, 1> a(5);
-    a.setValues({ 1, 2, 3, 4, 5 });
-    Eigen::Tensor<int, 1> b = a.cwiseMax(3);
-    std::cout << b << std::endl;
+    float* data = new float[4]{0.,1.,2.,3};
+    const dynet::Dim d({4}, 1);
+    dynet::Device_CPU* device = new dynet::Device_CPU(0, std::string("512"), false);
+    dynet::Tensor t(d, data, device, dynet::DeviceMempool::FXS);
+    
 }
