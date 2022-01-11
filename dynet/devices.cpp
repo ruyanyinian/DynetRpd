@@ -59,14 +59,15 @@ DeviceMempoolSizes::DeviceMempoolSizes(const std::string& descriptor) {
 
 Device::~Device() {}
 
-DeviceMempoolSizes Device::Mark(ComputationGraph* cg) {   // 计算图相关, 现在还没有彻底研究这段代码
-    cg->incremental_forward({cg, (VariableIndex)(cg->nodes.size() - 1)}); // needed so that we actually allocate the needed memory
-    return DeviceMempoolSizes(pools[0]->used(), pools[1]->used(), pools[2]->used(), pools[3]->used());
-}
+// DeviceMempoolSizes Device::Mark(ComputationGraph* cg) {   // 计算图相关, 现在还没有彻底研究这段代码
+//     cg->incremental_forward({cg, (VariableIndex)(cg->nodes.size() - 1)}); // needed so that we actually allocate the needed memory
+//     return DeviceMempoolSizes(pools[0]->used(), pools[1]->used(), pools[2]->used(), pools[3]->used());
+// }
 
 void Device::revert(const DeviceMempoolSizes& cp) {
 
 }
+
 void Device::allocate_tensor(DeviceMempool mp, Tensor& tens) {
 
     tens.v = (float*)pools[(int)mp]->allocate(tens.d.size() * sizeof(float));
