@@ -68,10 +68,10 @@ void Device::revert(const DeviceMempoolSizes& cp) {
 
 }
 
-void Device::allocate_tensor(DeviceMempool mp, Tensor& tens) {
+void Device::allocate_tensor(DeviceMempool mp, Tensor & tens) {
 
     tens.v = (float*)pools[(int)mp]->allocate(tens.d.size() * sizeof(float));
-    tens.mem_pool = mp
+    tens.mem_pool = mp;
 }
 
 Device_CPU::Device_CPU(int my_id, const DeviceMempoolSizes& mbs, bool shared) : 

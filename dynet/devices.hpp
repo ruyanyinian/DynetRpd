@@ -6,10 +6,11 @@
 #include <exception>
 #include <unsupported/Eigen/CXX11/Tensor>
 
-#include "dynet/device-structs.hpp"
-#include "dynet/globals.hpp"
-#include "dynet/mem.hpp"
 #include "dynet/aligned-mem-pool.hpp"
+#include "dynet/globals.hpp"
+#include "dynet/device-structs.hpp"
+
+
 
 namespace Eigen {
     struct DefaultDevice;

@@ -2,7 +2,6 @@
 #define DYNET_DEVICE_STRUCTS_HPP
 
 namespace dynet {
-
 enum class DeviceType {CPU, GPU};
 /*
  * FXS   -> forward pass memory
@@ -12,7 +11,7 @@ enum class DeviceType {CPU, GPU};
  * NONE  -> when a memory pool has not been assigned yet
  */
 enum class DeviceMempool {FXS = 0, DEDFS = 1, PS = 2, SCS = 3, NONE = 4};
-struct Tensor; 
+struct Tensor ;
 
 struct DeviceMempoolSizes {
     size_t used[4];
