@@ -1,6 +1,5 @@
 #ifndef DYNET_DEVICE_STRUCTS_HPP
 #define DYNET_DEVICE_STRUCTS_HPP
-
 namespace dynet {
 enum class DeviceType {CPU, GPU};
 /*

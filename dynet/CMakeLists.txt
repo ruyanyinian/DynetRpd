@@ -1,11 +1,11 @@
 # ########## dynet library ##########
 # Sources:
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/)
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 set(dynet_library_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/tensor.cpp
     # ${CMAKE_CURRENT_SOURCE_DIR}/tensor.cpp
 )
-
+message(STATUS ${PROJECT_SOURCE_DIR})
 # Headers:
 # set(dynet_library_HDRS
 #     devices.hpp
