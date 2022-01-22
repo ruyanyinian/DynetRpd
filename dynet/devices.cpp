@@ -77,6 +77,55 @@ void Device::allocate_tensor(DeviceMempool mp, Tensor & tens) {
 Device_CPU::Device_CPU(int my_id, const DeviceMempoolSizes& mbs, bool shared) : 
     Device(my_id, DeviceType::CPU, &cpu_mem), shmem(mem) {
     if (shared) shmem = new SharedAllocator();
+    kSCALAR_MINUSONE = (float*)mem->malloc(sizeof(float) * 1);
+    *kSCALAR_MINUSONE = -1.;
+    kSCALAR_ONE = (float*)mem->malloc(sizeof(float) * 1);
+    *kSCALAR_ONE = 1.;
+    kSCALAR_ZERO = (float*)mem->malloc(sizeof(float) * 1);
+    *kSCALAR_ZERO = 0.;
+    name = "CPU";
+    
+    edevice = new Eigen::DefaultDevice;
+    pools[0] = new AlignedMemoryPool("CPU forward memory", (mbs.used[0] << 20), &cpu_mem);
+    pools[1] = new AlignedMemoryPool("CPU backward memory", (mbs.used[1] << 20), &cpu_mem);
+    pools[2] = new AlignedMemoryPool("CPU parameter memory", (mbs.used[2] << 20), shmem);
+    pools[3] = new AlignedMemoryPool("CPU scratch memory", (mbs.used[3] << 20), &cpu_mem);
+    
+}
+Device_CPU::~Device_CPU() {}
+
+DeviceManager::DeviceManager() {}
+DeviceManager::~DeviceManager() {
+    clear();
+}
+
+void DeviceManager::clear() {
+  devices.clear();
+}
+
+
+void DeviceManager::add(Device* d) {
+    devices.push_back(d);
+    devices_map[d->name] = d;
+}
+
+Device* DeviceManager::get_global_device(const std::string& name) {
+    if (name == "") {
+        if (!dynet::default_device) {
+        throw std::runtime_error("Default device does not exist"); // 如果default device没有赋值的话, 会抛出异常
+        }
+        return dynet::default_device;
+    }
+    auto it = devices_map.find(name);
+    if (it == devices_map.end()) {
+        throw std::runtime_error("Invalid device name: " + name);
+    }
+    return it->second;
+}
+
+DeviceManager* get_device_manager() {
+    static auto device_manager = new DeviceManager();
+    return device_manager;
 }
 
 } /*namespace dynet*/

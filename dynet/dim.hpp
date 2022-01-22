@@ -120,6 +120,5 @@ struct Dim
 
 std::ostream& operator<<(std::ostream& os, const Dim& d);
 
-
 }
 #endif 

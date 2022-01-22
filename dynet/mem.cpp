@@ -47,7 +47,7 @@ void* SharedAllocator::malloc(size_t n) {
         throw dynet::out_of_memory("Shared memory allocation failed");
     }
     return ptr;
-#endif
+
 }
 
 void SharedAllocator::free(void* mem) {
@@ -57,4 +57,5 @@ void SharedAllocator::free(void* mem) {
 void SharedAllocator::zero(void* p, size_t n) {
     memset(p, 0, n);
 }
+
 }

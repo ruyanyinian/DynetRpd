@@ -7,10 +7,9 @@
 #include <stdexcept>
 
 #include "dynet/dim.hpp"
-// #include "dynet/except.hpp"
+#include "dynet/except.hpp"
 #include "dynet/aligned-mem-pool.hpp"
 #include "dynet/device-structs.hpp"
-#include "dynet/devices.hpp"
 
 namespace dynet {
 
