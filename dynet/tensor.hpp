@@ -96,6 +96,21 @@ std::vector<real> as_vector(const Tensor& t);
 //目前不知道
 std::vector<real> as_scale_vector(const Tensor& v, float a);
 
+struct TensorTools {
+    /**
+     * \brief Clip the values in the tensor to a fixed range
+     * \param d Tensor to modify
+     * \param left Target minimum value
+     * \param right Target maximum value
+     */
+    static void clip(Tensor& d, float left, float right);
+    /**
+     * \brief Do an elementwise linear transform of values a*x + b
+     * \
+     */ 
+    static void scale(Tensor& x, float left, float right);
+
+};
 
 }
 #endif 
